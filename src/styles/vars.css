@@ -68,4 +68,8 @@
   --xs-disabled-bg-color: var(--xs-fill-color-light);
   --xs-disabled-text-color: var(--xs-text-color-placeholder);
   --xs-disabled-border-color: var(--xs-border-color-light);
+
+  /*animation*/
+  --xs-transition-duration: 0.3s;
+  --xs-transition-duration-fast: 0.2s;
 }

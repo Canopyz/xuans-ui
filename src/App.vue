@@ -1,28 +1,28 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import type { ButtonInstance } from './components/Button/types'
-import Button from './components/Button/button.vue'
+import { ref } from 'vue'
+import Collapse from './components/Collapse/Collapse.vue'
+import CollapseItem from './components/Collapse/CollapseItem.vue'
 
-const button = ref<ButtonInstance>()
-onMounted(() => {
-  if (button.value) {
-    console.log('buttonRef', button.value.ref)
-  }
-})
+const openedValues = ref(['a'])
 </script>
 
 <template>
-  <Button type="primary" round ref="button"> 123 </Button>
-  <Button type="danger"> 123 </Button>
-  <Button type="info"> 123 </Button>
-  <Button type="success"> 123 </Button>
-  <Button type="warning"> 123 </Button>
-  <br />
-  <a href="">link</a>
-  <h1>Test</h1>
-  <h2>Test</h2>
-  <h3>Test</h3>
-  <hr />
+  <Collapse v-model="openedValues" accordion>
+    <CollapseItem name="a">
+      <template #title>
+        <h1>nice title</h1>
+      </template>
+      <h1>headline title</h1>
+      <div>this is content</div>
+    </CollapseItem>
+    <CollapseItem name="b" title="nice title b item b">
+      <div>this is bbbbb test</div>
+    </CollapseItem>
+    <CollapseItem name="c" title="nice title c item c" disabled>
+      <div>this is cc test</div>
+    </CollapseItem>
+  </Collapse>
+  {{ openedValues }}
 </template>
 
 <style scoped></style>
