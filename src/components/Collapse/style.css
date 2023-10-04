@@ -43,3 +43,10 @@
   color: var(--xs-collapse-content-text-color);
   padding-bottom: 25px;
 }
+.angle {
+  transition: transform var(--xs-transition-duration);
+
+  &.is-active {
+    transform: rotate(90deg);
+  }
+}

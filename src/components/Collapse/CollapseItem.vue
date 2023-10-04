@@ -16,6 +16,13 @@
       <slot name="title">
         {{ title }}
       </slot>
+      <Icon
+        icon="angle-right"
+        class="angle"
+        :class="{
+          'is-active': isActive,
+        }"
+      />
     </div>
     <Transition v-on="transitionEvents">
       <div class="xs-collapse-item_wrapper" v-show="isActive">
@@ -33,6 +40,7 @@
 <script setup lang="ts">
 import { inject, computed } from 'vue'
 import { collapseCtxKey, type CollapseItemProps } from './types'
+import Icon from '../Icon/Icon.vue'
 
 defineOptions({
   name: 'XsCollapseItem',

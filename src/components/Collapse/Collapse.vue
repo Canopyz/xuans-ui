@@ -43,15 +43,17 @@ const checkAccordion = () => {
 
 const handleItemClick = (item: NameType) => {
   const index = activeNames.value.indexOf(item)
+  const _activeNames = [...activeNames.value]
   if (index > -1) {
-    activeNames.value.splice(index, 1)
+    _activeNames.splice(index, 1)
   } else {
     if (props.accordion) {
-      activeNames.value[0] = item
+      _activeNames[0] = item
     } else {
-      activeNames.value.push(item)
+      _activeNames.push(item)
     }
   }
+  activeNames.value = _activeNames
   emits('update:modelValue', activeNames.value)
   emits('change', activeNames.value)
 }
