@@ -1,12 +1,20 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { onMounted, ref } from 'vue'
+import { createPopper, type Instance } from '@popperjs/core'
+import { TooltipInstance } from './components/Tooltip/types'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from './components/Icon/Icon.vue'
 import Alert from './components/Alert/Alert.vue'
+import Tooltip from './components/Tooltip/Tooltip.vue'
 
 const openedValues = ref(['a'])
+const tooltip = ref<TooltipInstance>()
+
+setTimeout(() => {
+  tooltip.value?.show()
+}, 2000)
 </script>
 
 <template>
@@ -35,6 +43,19 @@ const openedValues = ref(['a'])
     title="test"
     description="This is a short description"
   />
+  <Tooltip
+    placement="top"
+    trigger="hover"
+    ref="tooltip"
+    :popper-options="{ placement: 'right' }"
+  >
+    <img
+      src="./assets/logo.svg"
+      alt=""
+      style="width: 125px; height: 125px"
+    />
+    <template #content>test</template>
+  </Tooltip>
 </template>
 
 <style scoped></style>
