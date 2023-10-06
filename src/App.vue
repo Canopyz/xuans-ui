@@ -1,25 +1,25 @@
 <script setup lang="ts">
-import { onMounted, ref } from 'vue'
-import { createPopper, type Instance } from '@popperjs/core'
-import { TooltipInstance } from './components/Tooltip/types'
+import { h, onMounted, ref } from 'vue'
+import type { TooltipInstance } from './components/Tooltip/types'
 import Button from './components/Button/Button.vue'
 import Collapse from './components/Collapse/Collapse.vue'
 import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from './components/Icon/Icon.vue'
 import Alert from './components/Alert/Alert.vue'
-import Tooltip from './components/Tooltip/Tooltip.vue'
+// import Tooltip from './components/Tooltip/Tooltip.vue'
+import Dropdown from './components/Dropdown/Dropdown.tsx'
 
 const openedValues = ref(['a'])
-const tooltip = ref<TooltipInstance>()
+const tooltip = ref<TooltipInstance | null>(null)
 
-setTimeout(() => {
-  tooltip.value?.show()
-}, 2000)
+onMounted(() => {
+  console.log(tooltip.value)
+})
 </script>
 
 <template>
-  <Button icon="arrow-up" loading>test</Button>
-  <Button icon="arrow-down">test</Button>
+  <Button icon="arrow-up" @click="tooltip?.show">test</Button>
+  <Button icon="arrow-down" @click="tooltip?.hide">test</Button>
   <Collapse v-model="openedValues" accordion>
     <CollapseItem name="a">
       <template #title>
@@ -43,11 +43,46 @@ setTimeout(() => {
     title="test"
     description="This is a short description"
   />
-  <Tooltip
-    placement="top"
+  <!-- <Tooltip -->
+  <!--   placement="top" -->
+  <!--   trigger="hover" -->
+  <!--   ref="tooltip" -->
+  <!--   :popper-options="{ placement: 'right' }" -->
+  <!-- > -->
+  <!--   <img -->
+  <!--     src="./assets/logo.svg" -->
+  <!--     alt="" -->
+  <!--     style="width: 125px; height: 125px" -->
+  <!--   /> -->
+  <!--   <template #content>test</template> -->
+  <!-- </Tooltip> -->
+  <Dropdown
+    placement="right"
     trigger="hover"
     ref="tooltip"
     :popper-options="{ placement: 'right' }"
+    :menu-options="[
+      {
+        key: 1,
+        label: h('b', 'This is bold'),
+      },
+      {
+        key: 2,
+        label: 'item2',
+        disabled: true,
+      },
+      {
+        key: 3,
+        label: 'item1',
+        divided: true,
+      },
+      {
+        key: 4,
+        label: 'item4',
+      },
+    ]"
+    @visible-change="(value) => console.log('visible change', value)"
+    @select="(item) => console.log('select', item)"
   >
     <img
       src="./assets/logo.svg"
@@ -55,7 +90,7 @@ setTimeout(() => {
       style="width: 125px; height: 125px"
     />
     <template #content>test</template>
-  </Tooltip>
+  </Dropdown>
 </template>
 
 <style scoped></style>
