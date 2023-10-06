@@ -4,7 +4,12 @@
       <slot />
     </div>
     <Transition :name="transition">
-      <div class="xs-tooltip__popper" ref="popperNode" v-show="isOpen">
+      <div
+        class="xs-tooltip__popper"
+        ref="popperNode"
+        v-show="isOpen"
+        v-on="dropdownEvents"
+      >
         <slot name="content">
           {{ content }}
         </slot>
@@ -28,6 +33,10 @@ import type { TooltipEmits, TooltipProps, TooltipInstance } from './types'
 import useClickOutside from '../../hooks/useClickOutside'
 import { debounce } from 'lodash-es'
 
+defineOptions({
+  name: 'XsTooltip',
+})
+
 const props = withDefaults(defineProps<TooltipProps>(), {
   placement: 'bottom',
   trigger: 'hover',
@@ -39,42 +48,15 @@ const props = withDefaults(defineProps<TooltipProps>(), {
 const emits = defineEmits<TooltipEmits>()
 
 const isOpen = ref<boolean>(false)
-const openDebounced = debounce(() => {
-  if (!isOpen.value) {
-    isOpen.value = true
-    emits('visible-change', isOpen.value)
-  }
-}, props.openDelay)
-const closeDebounced = debounce(() => {
-  if (isOpen.value) {
-    isOpen.value = false
-    emits('visible-change', isOpen.value)
-  }
-}, props.closeDelay)
-const open = () => {
-  closeDebounced.cancel()
-  openDebounced()
-}
-const close = () => {
-  openDebounced.cancel()
-  closeDebounced()
-}
-
-const toggleOpen = () => {
-  if (isOpen.value) {
-    close()
-  } else {
-    open()
-  }
-  emits('visible-change', isOpen.value)
-}
-
 const tooltipNode = ref<HTMLElement>()
 const popperNode = ref<HTMLElement>()
 const triggerNode = ref<HTMLElement>()
 const popperInstance = ref<Instance | null>(null)
+
 let events: Record<string, any> = reactive({})
 let outerEvents: Record<string, any> = reactive({})
+let dropdownEvents: Record<string, any> = reactive({})
+
 const popperOptions = computed(() => {
   return {
     placement: props.placement,
@@ -90,6 +72,41 @@ const popperOptions = computed(() => {
   }
 })
 
+const closeDelay = computed(() =>
+  props.trigger === 'hover' && props.closeDelay < 50
+    ? 50
+    : props.closeDelay,
+)
+
+const openDebounced = debounce(() => {
+  if (!isOpen.value) {
+    isOpen.value = true
+    emits('visible-change', isOpen.value)
+  }
+}, props.openDelay)
+const closeDebounced = debounce(() => {
+  if (isOpen.value) {
+    isOpen.value = false
+    emits('visible-change', isOpen.value)
+  }
+}, closeDelay.value)
+const open = () => {
+  closeDebounced.cancel()
+  openDebounced()
+}
+const close = () => {
+  openDebounced.cancel()
+  closeDebounced()
+}
+
+const toggleOpen = () => {
+  if (isOpen.value) {
+    close()
+  } else {
+    open()
+  }
+}
+
 useClickOutside(tooltipNode, () => {
   if (props.trigger === 'click' && isOpen.value && !props.manual) close()
 })
@@ -101,11 +118,13 @@ const attachEvents = () => {
   } else if (props.trigger === 'hover') {
     events['mouseenter'] = open
     outerEvents['mouseleave'] = close
+    dropdownEvents['mouseenter'] = open
     events['click'] = null
   } else if (props.trigger === 'click') {
     events['click'] = toggleOpen
     events['mouseenter'] = null
     outerEvents['mouseleave'] = null
+    dropdownEvents['mouseenter'] = null
   }
 }
 
