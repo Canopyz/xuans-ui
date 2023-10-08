@@ -7,13 +7,35 @@ import CollapseItem from './components/Collapse/CollapseItem.vue'
 import Icon from './components/Icon/Icon.vue'
 import Alert from './components/Alert/Alert.vue'
 // import Tooltip from './components/Tooltip/Tooltip.vue'
-import Dropdown from './components/Dropdown/Dropdown.tsx'
+import Dropdown from './components/Dropdown/Dropdown'
+import Message from './components/Message/Message.vue'
+import { createMessage } from './components/Message'
 
 const openedValues = ref(['a'])
 const tooltip = ref<TooltipInstance | null>(null)
 
 onMounted(() => {
   console.log(tooltip.value)
+  const instance = createMessage({
+    type: 'error',
+    message: 'test',
+    duration: 3000,
+    showClose: true,
+  })
+  createMessage({
+    type: 'info',
+    message: 'test2',
+    duration: 3000,
+  })
+  createMessage({
+    type: 'success',
+    message: 'test3',
+    duration: 3000,
+  })
+
+  setTimeout(() => {
+    instance.destroy()
+  }, 1000)
 })
 </script>
 

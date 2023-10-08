@@ -1,0 +1,58 @@
+.xs-message {
+  --xs-message-bg-color: var(--xs-color-info-light-9);
+  --xs-message-border-color: var(--xs-border-color-lighter);
+  --xs-message-padding: 15px 19px;
+  --xs-message-close-size: 16px;
+  --xs-message-close-icon-color: var(--xs-text-color-placeholder);
+  --xs-message-close-hover-color: var(--xs-text-color-secondary);
+}
+.xs-message {
+  width: fit-content;
+  max-width: calc(100% - 32px);
+  box-sizing: border-box;
+  border-radius: var(--xs-border-radius-base);
+  border-width: var(--xs-border-width);
+  border-style: var(--xs-border-style);
+  border-color: var(--xs-message-border-color);
+  position: fixed;
+  left: 50%;
+  top: 20px;
+  transform: translateX(-50%);
+  background-color: var(--xs-message-bg-color);
+  padding: var(--xs-message-padding);
+  display: flex;
+  align-items: center;
+  transition:
+    top var(--xs-transition-duration),
+    opacity var(--xs-transition-duration),
+    transform var(--xs-transition-duration);
+  .xs-message__content {
+    color: var(--xs-message-text-color);
+    overflow-wrap: anywhere;
+  }
+  &.is-close .xs-message__content {
+    padding-right: 30px;
+  }
+  .xs-message__close {
+    display: flex;
+    align-items: center;
+  }
+  .xs-message__close svg {
+    cursor: pointer;
+  }
+}
+@each $val in info, success, warning, danger {
+  .xs-message--$(val) {
+    --xs-message-bg-color: var(--xs-color-$(val)-light-9);
+    --xs-message-border-color: var(--xs-color-$(val)-light-8);
+    --xs-message-text-color: var(--xs-color-$(val));
+    .xs-message__close {
+      --xs-icon-color: var(--xs-color-$(val));
+    }
+  }
+}
+.xs-message.fade-up-enter-from,
+.xs-message.fade-up-leave-to {
+  opacity: 0;
+  transform: translate(-50%, -100%);
+}
