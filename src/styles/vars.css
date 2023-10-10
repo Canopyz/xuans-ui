@@ -3,13 +3,7 @@
   --xs-color-white: #ffffff;
   --xs-color-black: #000000;
   --xs-color-primary: #409eff;
-  --colors: (
-    primary: #409eff,
-    success: #67c23a,
-    warning: #e6a23c,
-    danger: #f56c6c,
-    info: #909399
-  );
+  --colors: (primary: #409eff, success: #67c23a, warning: #e6a23c, danger: #f56c6c, info: #909399);
   @each $val, $color in var(--colors) {
     --xs-color-$(val): $(color);
     @for $i from 3 to 9 by 2 {
@@ -39,14 +33,13 @@
   --xs-fill-color-extra-light: #fafcff;
   --xs-fill-color-dark: #ebedf0;
   --xs-fill-color-darker: #e6e8eb;
-  --xs-fill-color-blank: #ffffff;
+  --xs-fill-color-blank: transparent;
 
   /* border */
   --xs-border-width: 1px;
   --xs-border-style: solid;
   --xs-border-color-hover: var(--xs-text-color-disabled);
-  --xs-border: var(--xs-border-width) var(--xs-border-style)
-    var(--xs-border-color);
+  --xs-border: var(--xs-border-width) var(--xs-border-style) var(--xs-border-color);
   --xs-border-radius-base: 4px;
   --xs-border-radius-small: 2px;
   --xs-border-radius-round: 20px;
@@ -59,9 +52,8 @@
   --xs-font-size-base: 14px;
   --xs-font-size-small: 13px;
   --xs-font-size-extra-small: 12px;
-  --xs-font-family: 'Helvetica Neue', Helvetica, 'PingFang SC',
-    'Hiragino Sans GB', 'Microsoft YaHei', '\5fae\8f6f\96c5\9ed1', Arial,
-    sans-serif;
+  --xs-font-family: 'Helvetica Neue', Helvetica, 'PingFang SC', 'Hiragino Sans GB',
+    'Microsoft YaHei', '\5fae\8f6f\96c5\9ed1', Arial, sans-serif;
   --xs-font-weight-primary: 500;
 
   /*disabled*/
