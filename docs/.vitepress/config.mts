@@ -11,15 +11,15 @@ export default defineConfig({
     plugins: [vueJsx()],
     resolve: {
       alias: {
-        '@': fileURLToPath(new URL('../../src', import.meta.url))
-      }
-    }
+        '@': fileURLToPath(new URL('../../src', import.meta.url)),
+      },
+    },
   },
   themeConfig: {
     // https://vitepress.dev/reference/default-theme-config
     nav: [
       { text: 'Home', link: '/' },
-      { text: 'Examples', link: '/markdown-examples' }
+      { text: 'Examples', link: '/markdown-examples' },
     ],
 
     sidebar: [
@@ -27,24 +27,25 @@ export default defineConfig({
         text: 'Examples',
         items: [
           { text: 'Markdown Examples', link: '/markdown-examples' },
-          { text: 'Runtime API Examples', link: '/api-examples' }
-        ]
+          { text: 'Runtime API Examples', link: '/api-examples' },
+        ],
       },
       {
         text: '基础组件',
         items: [
           { text: 'Button 按钮', link: '/components/button' },
-          { text: 'Input 输入框', link: '/components/input' }
-        ]
-      }
+          { text: 'Input 输入框', link: '/components/input' },
+          { text: 'Switch 开关', link: '/components/switch' },
+        ],
+      },
     ],
 
-    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }]
+    socialLinks: [{ icon: 'github', link: 'https://github.com/vuejs/vitepress' }],
   },
   markdown: {
     config(md) {
       md.use(containerPreview)
       md.use(componentPreview)
-    }
-  }
+    },
+  },
 })
