@@ -20,3 +20,7 @@ export type InputEmits = {
   blur: [value: FocusEvent]
   clear: []
 }
+
+export interface InputInstance {
+  ref: HTMLElement
+}

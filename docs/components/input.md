@@ -1,5 +1,5 @@
 ---
-title: Input | V-Element
+title: Input
 description: Input 组件的文档
 ---
 

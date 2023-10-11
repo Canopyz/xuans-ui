@@ -17,8 +17,13 @@
         <slot name="prepend" />
       </div>
 
-      <div class="xs-input__wrapper" :class="{ 'is-focus': isFocus }">
-        <span v-if="$slots.prefix" class="xs-input__prefix">
+      <div
+        class="xs-input__wrapper"
+        :class="{ 'is-focus': isFocus }"
+        @click="focus"
+        ref="wrapperRef"
+      >
+        <span v-if="$slots.prefix" class="xs-input__prefix" tabindex="-1">
           <slot name="prefix" />
         </span>
         <input
@@ -42,16 +47,10 @@
         <span
           v-if="$slots.suffix || showClear || passwordIconVisible"
           class="xs-input__suffix"
-          @click="keepFocus"
+          tabindex="-1"
         >
           <slot name="suffix" />
-          <Icon
-            v-if="showClear"
-            icon="circle-xmark"
-            class="xs-input__clear"
-            @click="handleClear"
-            @mousedown.prevent="() => {}"
-          />
+          <Icon v-if="showClear" icon="circle-xmark" class="xs-input__clear" @click="handleClear" />
           <Icon
             v-if="passwordIconVisible"
             :icon="passwordVisible ? 'eye' : 'eye-slash'"
@@ -104,7 +103,12 @@ const props = withDefaults(defineProps<InputProps>(), {
 const emit = defineEmits<InputEmits>()
 // const attrs = useAttrs()
 
+const wrapperRef = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
+const focus = async () => {
+  await nextTick()
+  inputRef.value?.focus()
+}
 
 const handleInputChange = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).value ?? '')
@@ -118,12 +122,6 @@ const handleClear = () => {
   emit('change', '')
   emit('input', '')
   emit('clear')
-}
-
-const keepFocus = () => {
-  nextTick(() => {
-    inputRef.value?.focus()
-  })
 }
 
 const passwordVisible = ref(false)
@@ -142,16 +140,21 @@ const computedType = computed(() => {
 })
 
 const handleFocus = (e: FocusEvent) => {
+  if (isFocus.value) return
   emit('focus', e)
   isFocus.value = true
 }
 
 const handleBlur = (e: FocusEvent) => {
+  if (e.relatedTarget && wrapperRef.value?.contains(e.relatedTarget as Node)) {
+    return
+  }
   emit('blur', e as FocusEvent)
   isFocus.value = false
 }
 
 const handleInput = (e: Event) => {
+  emit('update:modelValue', (e.target as HTMLInputElement).value ?? '')
   emit('input', (e.target as HTMLInputElement).value ?? '')
 }
 
