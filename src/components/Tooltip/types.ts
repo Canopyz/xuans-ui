@@ -18,4 +18,5 @@ export type TooltipEmits = {
 export interface TooltipInstance {
   show: () => void
   hide: () => void
+  toggle: () => void
 }

@@ -23,5 +23,4 @@ export interface CollapseCtx {
   handleItemClick: (name: NameType) => void
 }
 
-export const collapseCtxKey: InjectionKey<CollapseCtx> =
-  Symbol('collapseCtxKey')
+export const collapseCtxKey: InjectionKey<CollapseCtx> = Symbol('collapseCtxKey')

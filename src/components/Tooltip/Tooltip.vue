@@ -4,12 +4,7 @@
       <slot />
     </div>
     <Transition :name="transition">
-      <div
-        class="xs-tooltip__popper"
-        ref="popperNode"
-        v-show="isOpen"
-        v-on="dropdownEvents"
-      >
+      <div class="xs-tooltip__popper" ref="popperNode" v-show="isOpen" v-on="dropdownEvents">
         <slot name="content">
           {{ content }}
         </slot>
@@ -20,14 +15,7 @@
 </template>
 
 <script setup lang="ts">
-import {
-  computed,
-  reactive,
-  ref,
-  watch,
-  watchEffect,
-  onUnmounted,
-} from 'vue'
+import { computed, reactive, ref, watch, watchEffect, onUnmounted } from 'vue'
 import { type Instance, createPopper } from '@popperjs/core'
 import type { TooltipEmits, TooltipProps, TooltipInstance } from './types'
 import useClickOutside from '../../hooks/useClickOutside'
@@ -73,9 +61,7 @@ const popperOptions = computed(() => {
 })
 
 const closeDelay = computed(() =>
-  props.trigger === 'hover' && props.closeDelay < 50
-    ? 50
-    : props.closeDelay,
+  props.trigger === 'hover' && props.closeDelay < 50 ? 50 : props.closeDelay,
 )
 
 const openDebounced = debounce(() => {
@@ -154,5 +140,6 @@ onUnmounted(() => {
 defineExpose<TooltipInstance>({
   show: open,
   hide: close,
+  toggle: toggleOpen,
 })
 </script>

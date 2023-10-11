@@ -8,12 +8,12 @@ describe('Input', () => {
       props: {
         modelValue: 'value',
         type: 'text',
-        size: 'small'
+        size: 'small',
       },
       slots: {
         prepend: 'prepend',
-        prefix: 'prefix'
-      }
+        prefix: 'prefix',
+      },
     })
 
     // class
@@ -39,8 +39,8 @@ describe('Input', () => {
     const wrapper2 = mount(Input, {
       props: {
         modelValue: 'value',
-        type: 'textarea'
-      }
+        type: 'textarea',
+      },
     })
     expect(wrapper2.find('textarea').exists()).toBe(true)
   })
@@ -51,8 +51,8 @@ describe('Input', () => {
         modelValue: 'value',
         'onUpdate:modelValue': (val: string) => {
           wrapper.setProps({ modelValue: val })
-        }
-      }
+        },
+      },
     })
     const input = wrapper.get('input')
     expect(input.element.value).toBe('value')
@@ -73,11 +73,11 @@ describe('Input', () => {
         clearable: true,
         'onUpdate:modelValue': (val: string) => {
           wrapper.setProps({ modelValue: val })
-        }
+        },
       },
       global: {
-        stubs: ['Icon']
-      }
+        stubs: ['Icon'],
+      },
     })
 
     expect(wrapper.find('.xs-input__clear').exists()).toBe(false)
@@ -99,11 +99,11 @@ describe('Input', () => {
         showPassword: true,
         'onUpdate:modelValue': (val: string) => {
           wrapper.setProps({ modelValue: val })
-        }
+        },
       },
       global: {
-        stubs: ['Icon']
-      }
+        stubs: ['Icon'],
+      },
     })
     const input = wrapper.get('input')
     expect(input.element.type).toBe('password')
@@ -128,11 +128,11 @@ describe('Input', () => {
         modelValue: 'value',
         'onUpdate:modelValue': (val: string) => {
           wrapper.setProps({ modelValue: val })
-        }
+        },
       },
       global: {
-        stubs: ['Icon']
-      }
+        stubs: ['Icon'],
+      },
     })
 
     const input = wrapper.get('input')

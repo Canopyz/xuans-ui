@@ -6,12 +6,7 @@
 
 <script setup lang="ts">
 import { ref, provide, watch, onMounted } from 'vue'
-import {
-  type NameType,
-  type CollapseProps,
-  type CollapseEmits,
-  collapseCtxKey,
-} from './types'
+import { type NameType, type CollapseProps, type CollapseEmits, collapseCtxKey } from './types'
 
 defineOptions({
   name: 'XsCollapse',

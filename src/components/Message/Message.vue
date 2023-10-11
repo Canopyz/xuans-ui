@@ -6,7 +6,7 @@
       role="alert"
       :class="{
         [`xs-message--${type === 'error' ? 'danger' : type}`]: true,
-        'is-close': showClose
+        'is-close': showClose,
       }"
       ref="messageRef"
       :style="style"
@@ -35,14 +35,14 @@ import useZIndex from '../../hooks/useZIndex'
 import useEventListener from '../../hooks/useEventListener'
 
 defineOptions({
-  name: 'XsMessage'
+  name: 'XsMessage',
 })
 
 const props = withDefaults(defineProps<MessageProps>(), {
   duration: 3000,
   type: 'info',
   offset: 20,
-  transition: 'fade-up'
+  transition: 'fade-up',
 })
 
 const messageRef = ref<HTMLDivElement | null>(null)
@@ -60,7 +60,7 @@ const zIndex = nextZIndex()
 const style = computed(() => {
   return {
     top: `${top.value}px`,
-    zindex: zIndex
+    zindex: zIndex,
   }
 })
 
@@ -104,6 +104,6 @@ function updateHeight() {
 
 defineExpose({
   bottomOffset,
-  closeMessage
+  closeMessage,
 })
 </script>

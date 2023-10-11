@@ -59,12 +59,7 @@ onMounted(() => {
   </Collapse>
   {{ openedValues }}
   <Icon icon="arrow-up" size="2x" color="#fedcba" />
-  <Alert
-    show-icon
-    type="danger"
-    title="test"
-    description="This is a short description"
-  />
+  <Alert show-icon type="danger" title="test" description="This is a short description" />
   <!-- <Tooltip -->
   <!--   placement="top" -->
   <!--   trigger="hover" -->
@@ -106,11 +101,7 @@ onMounted(() => {
     @visible-change="(value) => console.log('visible change', value)"
     @select="(item) => console.log('select', item)"
   >
-    <img
-      src="./assets/logo.svg"
-      alt=""
-      style="width: 125px; height: 125px"
-    />
+    <img src="./assets/logo.svg" alt="" style="width: 125px; height: 125px" />
     <template #content>test</template>
   </Dropdown>
 </template>

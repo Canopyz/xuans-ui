@@ -5,9 +5,7 @@ import Message from './Message.vue'
 let seed = 1
 const instances: MessageContext[] = shallowReactive([])
 
-export const createMessage = (
-  props: Omit<MessageProps, 'onDestroy' | 'id' | 'zIndex'>,
-) => {
+export const createMessage = (props: Omit<MessageProps, 'onDestroy' | 'id' | 'zIndex'>) => {
   const id = `message_${seed++}`
   const container = document.createElement('div')
   const newProps = {
@@ -45,8 +43,7 @@ export const getLastBottomOffset = (id: string) => {
   const index = instances.findIndex((instance) => instance.id === id)
   if (index <= 0) return 0
   const prev = instances[index - 1]
-  const prevBottomOffset =
-    prev.vnode?.component?.exposed?.bottomOffset.value
+  const prevBottomOffset = prev.vnode?.component?.exposed?.bottomOffset.value
   return prevBottomOffset || 0
 }
 
