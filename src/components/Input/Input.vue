@@ -11,6 +11,7 @@
       'is-suffix': $slots.suffix,
       'is-focus': isFocus,
     }"
+    v-bind="rootAttrs"
   >
     <template v-if="type !== 'textarea'">
       <div v-if="$slots.prepend" class="xs-input__prepend">
@@ -29,7 +30,7 @@
         <input
           ref="inputRef"
           class="xs-input__inner"
-          v-bind="$attrs"
+          v-bind="inputAttrs"
           :type="computedType"
           :disabled="disabled"
           :readonly="readonly"
@@ -68,7 +69,7 @@
     <template v-else>
       <textarea
         class="xs-textarea__wrapper"
-        v-bind="$attrs"
+        v-bind="inputAttrs"
         ref="inputRef"
         :disabled="disabled"
         :readonly="readonly"
@@ -89,19 +90,29 @@
 <script setup lang="ts">
 import type { InputProps, InputEmits } from './types'
 import Icon from '../Icon/Icon.vue'
-import { computed, ref, useAttrs, nextTick } from 'vue'
+import { computed, ref, nextTick, useAttrs } from 'vue'
 
 defineOptions({
   name: 'XsInput',
   inheritAttrs: false,
 })
 
+const attrs = useAttrs()
+const rootAttrs = computed(() => ({
+  onMouseenter: attrs.onMouseenter as (e: MouseEvent) => void,
+  onMouseleave: attrs.onMouseleave as (e: MouseEvent) => void,
+}))
+const inputAttrs = computed(() => ({
+  ...attrs,
+  onMouseenter: undefined,
+  onMouseleave: undefined,
+}))
+
 const props = withDefaults(defineProps<InputProps>(), {
   type: 'text',
   autocomplete: 'off',
 })
 const emit = defineEmits<InputEmits>()
-// const attrs = useAttrs()
 
 const wrapperRef = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)

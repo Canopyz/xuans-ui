@@ -13,6 +13,7 @@ export interface TooltipProps {
 
 export type TooltipEmits = {
   'visible-change': [value: boolean]
+  'click-outside': [e: MouseEvent]
 }
 
 export interface TooltipInstance {

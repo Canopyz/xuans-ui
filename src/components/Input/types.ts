@@ -22,5 +22,5 @@ export type InputEmits = {
 }
 
 export interface InputInstance {
-  ref: HTMLElement
+  ref: HTMLElement | HTMLTextAreaElement
 }

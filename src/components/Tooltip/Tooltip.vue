@@ -93,8 +93,13 @@ const toggleOpen = () => {
   }
 }
 
-useClickOutside(tooltipNode, () => {
-  if (props.trigger === 'click' && isOpen.value && !props.manual) close()
+useClickOutside(tooltipNode, (e) => {
+  if (props.trigger === 'click' && isOpen.value && !props.manual) {
+    close()
+  }
+  if (isOpen.value) {
+    emits('click-outside', e)
+  }
 })
 
 const attachEvents = () => {
