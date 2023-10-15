@@ -22,7 +22,7 @@
 </template>
 
 <script setup lang="ts">
-import { defineOptions, ref } from 'vue'
+import { ref } from 'vue'
 import type { ButtonProps } from './types'
 import Icon from '../Icon/Icon.vue'
 

@@ -30,7 +30,7 @@ import { computed, onMounted, ref } from 'vue'
 import Icon from '../Icon/Icon.vue'
 import type { MessageProps } from './types'
 import RenderVnode from '../Common/RenderVnode'
-import { getLastBottomOffset } from './index'
+import { getLastBottomOffset } from './createMessage'
 import useZIndex from '../../hooks/useZIndex'
 import useEventListener from '../../hooks/useEventListener'
 

@@ -96,7 +96,7 @@ export default defineComponent({
           popperOptions={props.popperOptions}
           openDelay={props.openDelay}
           closeDelay={props.closeDelay}
-          onVisibleChange={handleVisibleChange}
+          onVisible-change={handleVisibleChange}
           manual={props.manual}
           ref={tooltipRef}
         >

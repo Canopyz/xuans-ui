@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest'
-import { closeAll, createMessage } from '.'
+import { closeAll, createMessage } from './createMessage'
 import rAF from '../../utils/rAF'
 
 function getTopValue(element: Element) {

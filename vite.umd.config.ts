@@ -1,48 +1,31 @@
 import { fileURLToPath, URL } from 'node:url'
-import { resolve } from 'node:path'
-
+import { resolve } from 'path'
 import { defineConfig } from 'vite'
 import vue from '@vitejs/plugin-vue'
 import vueJsx from '@vitejs/plugin-vue-jsx'
-import dts from 'vite-plugin-dts'
 
 // https://vitejs.dev/config/
 export default defineConfig({
-  plugins: [
-    vue(),
-    vueJsx(),
-    dts({
-      tsconfigPath: './tsconfig.build.json',
-    }),
-  ],
+  plugins: [vue(), vueJsx()],
   resolve: {
     alias: {
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
   build: {
+    outDir: 'dist/umd',
     lib: {
       entry: resolve(__dirname, 'src/index.ts'),
       name: 'XuansUI',
       fileName: 'xuans-ui',
+      formats: ['umd'],
     },
     rollupOptions: {
-      external: [
-        'vue',
-        '@fortawesome/fontawesome-svg-core',
-        '@fortawesome/free-solid-svg-icons',
-        '@fortawesome/vue-fontawesome',
-      ],
+      external: ['vue'],
       output: {
         exports: 'named',
         globals: {
           vue: 'Vue',
-        },
-        assetFileNames: (chunkInfo) => {
-          if (chunkInfo.name === 'style.css') {
-            return 'index.css'
-          }
-          return chunkInfo.name as string
         },
       },
     },
