@@ -88,9 +88,10 @@
 </template>
 
 <script setup lang="ts">
+import { computed, ref, nextTick, useAttrs, inject } from 'vue'
 import type { InputProps, InputEmits } from './types'
 import Icon from '../Icon/Icon.vue'
-import { computed, ref, nextTick, useAttrs } from 'vue'
+import { formItemContextKey } from '../Form/types'
 
 defineOptions({
   name: 'XsInput',
@@ -114,6 +115,11 @@ const props = withDefaults(defineProps<InputProps>(), {
 })
 const emit = defineEmits<InputEmits>()
 
+const formItemContext = inject(formItemContextKey)
+const validate = (trigger?: string) => {
+  formItemContext?.validate(trigger).catch((e: any) => {})
+}
+
 const wrapperRef = ref<HTMLDivElement | null>(null)
 const inputRef = ref<HTMLInputElement | null>(null)
 const focus = async () => {
@@ -124,6 +130,7 @@ const focus = async () => {
 const handleInputChange = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).value ?? '')
   emit('change', (e.target as HTMLInputElement).value ?? '')
+  validate('change')
 }
 
 const isFocus = ref(false)
@@ -162,11 +169,13 @@ const handleBlur = (e: FocusEvent) => {
   }
   emit('blur', e as FocusEvent)
   isFocus.value = false
+  validate('blur')
 }
 
 const handleInput = (e: Event) => {
   emit('update:modelValue', (e.target as HTMLInputElement).value ?? '')
   emit('input', (e.target as HTMLInputElement).value ?? '')
+  validate('change')
 }
 
 defineExpose({
